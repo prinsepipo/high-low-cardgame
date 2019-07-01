@@ -63,3 +63,7 @@ body {
     color: #fff;
     background-color: rgb(164, 229, 255);
 }
+
+button::-moz-focus-inner {
+    border: 0;
+}
