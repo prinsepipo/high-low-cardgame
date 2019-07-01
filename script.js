@@ -1,120 +1,136 @@
+const DEFAULT_CARD = 'images/bg.png';
+
 let playBtn = document.getElementById('play');
 let highBtn = document.getElementById('high');
 let lowBtn = document.getElementById('low');
-let card1 = document.getElementById('card1');
+let card1 = document.getElementById('currentCard');
+let card2 = document.getElementById('nextCard');
 let statusText = document.getElementById('statusText');
 let scoreText = document.getElementById('score');
-let deckOfCards = createDeck();
-const DEFAULT_CARD = 'images/bg.png';
+
+let score = 0; // Initialize score as 0 on beginning of the game.
+let isPlaying = false;
+let deckOfCards;
+let currentCard;
+let nextCard;
 
 playBtn.addEventListener('click', () => {
-    // Initialize score as 0 on beginning of the game.
-    let score = 0;
-    scoreText.innerText = 'Score: ' + score;
-
-    statusText.innerText = 'Guess the next card value.';
-    console.log('Game Start!');
+    // Create deck.
+    deckOfCards = createDeck()
     // Show game buttons.
     showGameButtons();
+    // Information.
+    statusText.innerText = 'Guess the next card value.';
+    // Score
+    scoreText.innerText = 'Score: ' + score;
 
     // Generate cards.
-    let currentCard = getRandomCard(deckOfCards);
-    let nextCard = getRandomCard(deckOfCards);
-
-    console.log('Current: ' + currentCard.img);
-    console.log('Next: ' + nextCard.img);
-
+    currentCard = getRandomCard(deckOfCards);
+    nextCard = getRandomCard(deckOfCards);
     // Display current card img.
     showCard(card1, currentCard);
 
-    // Game logic
-    highBtn.addEventListener('click', () => {
-        console.log('Guess: High');
-        // If next card value is greater than current. -> Proceed.
-        // If not then end game.
-        if (nextCard.val >= currentCard.val) {
-            // increase score
-            score++;
-
-            statusText.innerText = 'Correct! Now next.';
-            scoreText.innerText = 'Score: ' + score;
-            console.log('Correct! ' + nextCard.val + ' > ' + currentCard.val);
-
-            currentCard = nextCard;
-            showCard(card1, currentCard);
-
-            // Generate next card if deckofcards has more than 1 card.
-            // If not, then next card should be null.
-            if (deckOfCards.length > 1) {
-                nextCard = getRandomCard(deckOfCards);
-            } else {
-                nextCard = null;
-            }
-
-            if (nextCard == null) {
-                console.log('Next card is null.');
-                hideGameButtons();
-                statusText.innerText = 'Congrats! You guessed all of the cards.';
-            }
-
-            console.log('Current: ' + currentCard.img);
-            console.log('Next: ' + nextCard.img);
-
-        } else {
-            statusText.innerText = 'Wrong guess.';
-            hideGameButtons();
-            deckOfCards = createDeck();
-            score = 0;
-        }
-    });
-
-    lowBtn.addEventListener('click', () => {
-        console.log('Guess: Low');
-        // If next card value is greater than current. -> Proceed.
-        // If not then end game.
-        if (nextCard.val <= currentCard.val) {
-            // increase score
-            score++;
-
-            statusText.innerText = 'Correct! Now next.';
-            scoreText.innerText = 'Score: ' + score;
-            console.log('Correct! ' + nextCard.val + ' < ' + currentCard.val);
-
-            currentCard = nextCard;
-            showCard(card1, currentCard);
-
-            if (deckOfCards.length > 1) {
-                nextCard = getRandomCard(deckOfCards);
-            } else {
-                nextCard = null;
-            }
-
-            if (nextCard == null) {
-                console.log('Next card is null.');
-                hideGameButtons();
-                statusText.innerText = 'Congrats! You guessed all of the cards.';
-            }
-
-            console.log('Current: ' + currentCard.img);
-            console.log('Next: ' + nextCard.img);
-        } else {
-            statusText.innerText = 'Wrong guess.';
-            hideGameButtons();
-            deckOfCards = createDeck();
-            score = 0;
-        }
-    });
-
+    // On start, do not next card.
+    card2.src = DEFAULT_CARD;
 });
 
+// Game logic
+highBtn.addEventListener('click', () => {
+    // If next card value is greater than current. -> Proceed.
+    // If not then end game.
+    if (nextCard.val >= currentCard.val) {
+        correctGuess();
+
+        currentCard = nextCard;
+        showCard(card1, currentCard);
+
+        // Generate next card if deckofcards has more than 1 card.
+        // If not, then next card should be null.
+        if (deckOfCards.length > 1) {
+            nextCard = getRandomCard(deckOfCards);
+        } else {
+            nextCard = null;
+        }
+
+        if (nextCard == null) {
+            console.log('Next card is null.');
+            hideGameButtons();
+            statusText.innerText = 'Congrats! You guessed all of the cards.';
+        }
+
+        console.log('Current: ' + currentCard.img);
+        console.log('Next: ' + nextCard.img);
+
+    } else {
+        wrongGuess();
+    }
+});
+
+lowBtn.addEventListener('click', () => {
+    // If next card value is greater than current. -> Proceed.
+    // If not then end game.
+    if (nextCard.val <= currentCard.val) {
+        correctGuess();
+
+        currentCard = nextCard;
+        showCard(card1, currentCard);
+
+        if (deckOfCards.length > 1) {
+            nextCard = getRandomCard(deckOfCards);
+        } else {
+            nextCard = null;
+        }
+
+        if (nextCard == null) {
+            console.log('Next card is null.');
+            hideGameButtons();
+            statusText.innerText = 'Congrats! You guessed all of the cards.';
+        }
+
+        console.log('Current: ' + currentCard.img);
+        console.log('Next: ' + nextCard.img);
+    } else {
+        wrongGuess();
+    }
+});
+
+
+function correctGuess() {
+    // Increase score
+    score++;
+    // Change information and score text.
+    statusText.innerText = 'Correct! Now next.';
+    scoreText.innerText = 'Score: ' + score;
+}
+
+
+function wrongGuess() {
+    // Show the img of next card
+    card2.src = nextCard.img;
+    // Change the information
+    statusText.innerText = 'Wrong guess.';
+    reset();
+}
+
+function reset() {
+    // Hide game buttons
+    hideGameButtons();
+    // Reset Deck and score
+    deckOfCards = createDeck();
+    score = 0;
+}
+
+
 function showCard(card, data) {
+    // <img src="?">
     card.src = data.img;
+    // <img alt="?">
     card.alt = data.val;
 }
 
 
 function getRandomCard(cards) {
-    if (cards.length == 1) {
+    if (cards == null || cards.length == 1) {
         return null;
     }
 
@@ -146,8 +162,8 @@ function showGameButtons() {
     // This will show high and low btn
     // and hide play btn.
     playBtn.style.display = 'none';
-    highBtn.style.display = 'inline';
-    lowBtn.style.display = 'inline';
+    highBtn.style.visibility = 'visible';
+    lowBtn.style.visibility = 'visible';
     scoreText.style.display = 'block';
 }
 
@@ -156,8 +172,8 @@ function hideGameButtons() {
     // This will hide the high and low btn
     // and show play btn.
     playBtn.style.display = 'block';
-    highBtn.style.display = 'none';
-    lowBtn.style.display = 'none';
+    highBtn.style.visibility = 'hidden';
+    lowBtn.style.visibility = 'hidden';
 }
 
 

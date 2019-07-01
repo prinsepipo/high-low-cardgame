@@ -8,6 +8,12 @@
 
         <link rel="stylesheet" href="style.css">
 
+        <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css"
+            integrity="sha384-i1LQnF23gykqWXg6jxC2ZbCbUMxyw5gLZY6UiUS98LYV5unm8GWmfkIS6jqJfb4E" crossorigin="anonymous"> -->
+
+        <!-- Bootstrap Fontawesome -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
         <title>High-Low Cardgame</title>
 
     </head>
@@ -15,8 +21,19 @@
     <body>
 
         <div class="container">
-            <div id="deck">
-                <img id="card1" class="card" src="images/bg.png" alt="">
+            <div class="table">
+                <div>
+                    <img id="currentCard" class="card" src="images/bg.png" alt="">
+                    <p>Current Card</p>
+                </div>
+                <div id='gameBtns'>
+                    <button id="high"><i class="fa fa-angle-double-up"></i></button>
+                    <button id="low"><i class="fa fa-angle-double-down"></i></button>
+                </div>
+                <div>
+                    <img id="nextCard" class="card" src="images/bg.png" alt="">
+                    <p>Next Card</p>
+                </div>
             </div>
 
             <div>
@@ -26,8 +43,6 @@
 
             <div>
                 <button id="play">Play</button>
-                <button id="high">Higher</button>
-                <button id="low">Lower</button>
             </div>
         </div>
 

@@ -6,6 +6,7 @@ body {
 
 .card {
     width: 200px;
+    height: 90%;
     border-radius: 5px;
 }
 
@@ -19,13 +20,46 @@ body {
     align-items: center;
 }
 
-#high,
-#low,
+.table {
+    display: flex;
+    text-align: center;
+    gap: 50px;
+}
+
+.table div p {
+    margin: 0;
+}
+
 #score {
     display: none;
 }
 
 #score {
     text-align: center;
+}
 
+#gameBtns {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    gap: 20px;
+}
+
+#high,
+#low {
+    font-size: 2rem;
+    border-radius: 50%;
+    border: solid 3px rgb(164, 229, 255);
+    color: rgb(60, 184, 233);
+    background: transparent;
+    visibility: hidden;
+    outline: none;
+    cursor: pointer;
+}
+
+#high:hover,
+#low:hover {
+    color: #fff;
+    background-color: rgb(164, 229, 255);
 }
