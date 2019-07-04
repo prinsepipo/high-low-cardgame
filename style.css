@@ -7,7 +7,7 @@ body {
     width: 200px;
     height: 90%;
     border-radius: 5px;
-    box-shadow: 3px 5px 5px rgb(126, 126, 126);
+    box-shadow: 3px 2px 5px rgb(126, 126, 126);
 }
 
 .container {
@@ -23,11 +23,6 @@ body {
 .table {
     display: flex;
     text-align: center;
-    gap: 50px;
-}
-
-.table div p {
-    margin: 0;
 }
 
 .scores {
@@ -40,13 +35,31 @@ body {
     flex-direction: column;
     height: 100%;
     justify-content: center;
-    gap: 20px;
+    margin: 0 25px;
+}
+
+#play {
+    font-size: 1rem;
+    border: solid 2px rgb(164, 229, 255);
+    background: none;
+    color: rgb(114, 186, 214);
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    transition: color 0.3s linear;
+}
+
+#play:hover {
+    color: #fff;
+    background-color: rgb(164, 229, 255);
 }
 
 #high,
 #low {
-    font-size: 2rem;
+    font-size: 1.5rem;
     border-radius: 50%;
+    margin: 10px;
     border: solid 3px rgb(164, 229, 255);
     color: rgb(60, 184, 233);
     background: transparent;
