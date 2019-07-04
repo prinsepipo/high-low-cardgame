@@ -21,10 +21,14 @@
     <body>
 
         <div class="container">
+            <div>
+                <h4>Cards Left: <span id="cardsLeft">52</span></h4>
+            </div>
+
             <div class="table">
                 <div>
                     <img id="currentCard" class="card" src="images/bg.png" alt="">
-                    <p>Current Card</p>
+                    <p style="margin-top: 5px;">Current Card</p0>
                 </div>
                 <div id='gameBtns'>
                     <button id="high"><i class="fa fa-angle-double-up"></i></button>
@@ -32,13 +36,14 @@
                 </div>
                 <div>
                     <img id="nextCard" class="card" src="images/bg.png" alt="">
-                    <p>Next Card</p>
+                    <p style="margin-top: 5px;">Next Card</p>
                 </div>
             </div>
 
-            <div>
+            <div class="text-center">
                 <p id="statusText">Start!</p>
-                <p id="score">Score: 0</p>
+                <p class="scores" id="score">Score: 0</p>
+                <p class="scores" id="highScore">High Score: 0</p>
             </div>
 
             <div>

@@ -3,11 +3,11 @@ body {
     padding: 0;
 }
 
-
 .card {
     width: 200px;
     height: 90%;
     border-radius: 5px;
+    box-shadow: 3px 5px 5px rgb(126, 126, 126);
 }
 
 .container {
@@ -30,11 +30,8 @@ body {
     margin: 0;
 }
 
-#score {
+.scores {
     display: none;
-}
-
-#score {
     text-align: center;
 }
 
@@ -62,8 +59,24 @@ body {
 #low:hover {
     color: #fff;
     background-color: rgb(164, 229, 255);
+    animation-name: pulse;
+    animation-duration: 1s;
+    animation-direction: forwards;
+    animation-iteration-count: infinite;
 }
 
 button::-moz-focus-inner {
     border: 0;
+}
+
+
+@keyframes pulse {
+    50% {
+        transform: scale(1.1);
+        box-shadow: 2px 2px 4px rgb(175, 175, 175);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }

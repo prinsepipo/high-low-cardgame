@@ -7,9 +7,12 @@ let card1 = document.getElementById('currentCard');
 let card2 = document.getElementById('nextCard');
 let statusText = document.getElementById('statusText');
 let scoreText = document.getElementById('score');
+let highScoreText = document.getElementById('highScore');
+let cardsLeftText = document.getElementById('cardsLeft');
 
 let score = 0; // Initialize score as 0 on beginning of the game.
-let isPlaying = false;
+let highScore = 0;
+let cardsLeft = 52;
 let deckOfCards;
 let currentCard;
 let nextCard;
@@ -18,11 +21,13 @@ playBtn.addEventListener('click', () => {
     // Create deck.
     deckOfCards = createDeck()
     // Show game buttons.
-    showGameButtons();
+    showGameUI();
     // Information.
     statusText.innerText = 'Guess the next card value.';
     // Score
     scoreText.innerText = 'Score: ' + score;
+    // Cards Left
+    cardsLeftText.innerText = cardsLeft;
 
     // Generate cards.
     currentCard = getRandomCard(deckOfCards);
@@ -54,7 +59,7 @@ highBtn.addEventListener('click', () => {
 
         if (nextCard == null) {
             console.log('Next card is null.');
-            hideGameButtons();
+            hideGameUI();
             statusText.innerText = 'Congrats! You guessed all of the cards.';
         }
 
@@ -83,7 +88,7 @@ lowBtn.addEventListener('click', () => {
 
         if (nextCard == null) {
             console.log('Next card is null.');
-            hideGameButtons();
+            hideGameUI();
             statusText.innerText = 'Congrats! You guessed all of the cards.';
         }
 
@@ -98,13 +103,21 @@ lowBtn.addEventListener('click', () => {
 function correctGuess() {
     // Increase score
     score++;
-    // Change information and score text.
+    // Decrease cards left
+    cardsLeft--;
+    // Change information, score text, and cards left text.
     statusText.innerText = 'Correct! Now next.';
     scoreText.innerText = 'Score: ' + score;
+    cardsLeftText.innerText = cardsLeft;
 }
 
 
 function wrongGuess() {
+    // Check high score.
+    if (score > highScore) {
+        highScore = score;
+        highScoreText.innerText = 'High Score: ' + highScore;
+    }
     // Show the img of next card
     card2.src = nextCard.img;
     // Change the information
@@ -114,10 +127,11 @@ function wrongGuess() {
 
 function reset() {
     // Hide game buttons
-    hideGameButtons();
-    // Reset Deck and score
+    hideGameUI();
+    // Reset Deck and score and cards left
     deckOfCards = createDeck();
     score = 0;
+    cardsLeft = 52;
 }
 
 
@@ -158,17 +172,18 @@ function getRandomCard(cards) {
 }
 
 
-function showGameButtons() {
+function showGameUI() {
     // This will show high and low btn
     // and hide play btn.
     playBtn.style.display = 'none';
     highBtn.style.visibility = 'visible';
     lowBtn.style.visibility = 'visible';
     scoreText.style.display = 'block';
+    highScoreText.style.display = 'block';
 }
 
 
-function hideGameButtons() {
+function hideGameUI() {
     // This will hide the high and low btn
     // and show play btn.
     playBtn.style.display = 'block';
