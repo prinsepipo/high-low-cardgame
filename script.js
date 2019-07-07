@@ -5,6 +5,8 @@ let highBtn = document.getElementById('high');
 let lowBtn = document.getElementById('low');
 let card1 = document.getElementById('currentCard');
 let card2 = document.getElementById('nextCard');
+let currentCardText = document.getElementById('currentCardText');
+let nextCardText = document.getElementById('nextCardText');
 let statusText = document.getElementById('statusText');
 let scoreText = document.getElementById('score');
 let highScoreText = document.getElementById('highScore');
@@ -34,6 +36,9 @@ playBtn.addEventListener('click', () => {
     nextCard = getRandomCard(deckOfCards);
     // Display current card img.
     showCard(card1, currentCard);
+
+    currentCardText.innerText = currentCard.name;
+    nextCardText.innerText = 'Next Card';
 
     // On start, do not next card.
     card2.src = DEFAULT_CARD;
@@ -68,7 +73,9 @@ highBtn.addEventListener('click', () => {
 
     } else {
         wrongGuess();
+        nextCardText.innerText = nextCard.name
     }
+    currentCardText.innerText = currentCard.name;
 });
 
 lowBtn.addEventListener('click', () => {
@@ -96,7 +103,9 @@ lowBtn.addEventListener('click', () => {
         console.log('Next: ' + nextCard.img);
     } else {
         wrongGuess();
+        nextCardText.innerText = nextCard.name
     }
+    currentCardText.innerText = currentCard.name;
 });
 
 
@@ -150,11 +159,13 @@ function getRandomCard(cards) {
 
     let index = getRandomInt(0, cards.length);
     let chosenCard = cards[index];
+    let cardName = '';
 
     if (chosenCard == null) {
         chosenCard = DEFAULT_CARD;
 
         return {
+            'name': cardName,
             'img': chosenCard,
             'val': ''
         }
@@ -165,7 +176,20 @@ function getRandomCard(cards) {
     let cardIndex = cards.indexOf(chosenCard);
     cards.splice(cardIndex, 1);
 
+    if (index >= 0 && index <= 12) {
+        cardName = cardVal + ' of Clovers';
+    } else if (index >= 13 && index <= 25) {
+        cardName = cardVal + ' of Diamonds';
+    } else if (index >= 26 && index <= 38) {
+        cardName = cardVal + ' of Hearts';
+    } else if (index >= 39 && index <= 51) {
+        cardName = cardVal + ' of Spades';
+    } else {
+        cardName = '';
+    }
+
     return {
+        'name': cardName,
         'img': chosenCard,
         'val': cardVal
     }

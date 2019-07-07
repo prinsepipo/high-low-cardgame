@@ -1,11 +1,12 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .card {
     width: 200px;
-    height: 90%;
+    height: auto;
     border-radius: 5px;
     box-shadow: 3px 2px 5px rgb(126, 126, 126);
 }
@@ -57,25 +58,20 @@ body {
 
 #high,
 #low {
-    font-size: 1.5rem;
-    border-radius: 50%;
-    margin: 10px;
-    border: solid 3px rgb(164, 229, 255);
+    font-size: 2rem;
+    margin: 12px;
     color: rgb(60, 184, 233);
+    border: none;
     background: transparent;
     visibility: hidden;
     outline: none;
     cursor: pointer;
+    transition: transform 0.5s;
 }
 
 #high:hover,
 #low:hover {
-    color: #fff;
-    background-color: rgb(164, 229, 255);
-    animation-name: pulse;
-    animation-duration: 1s;
-    animation-direction: forwards;
-    animation-iteration-count: infinite;
+    transform: scale(1.2, 1.2);
 }
 
 button::-moz-focus-inner {
@@ -83,13 +79,9 @@ button::-moz-focus-inner {
 }
 
 
-@keyframes pulse {
-    50% {
-        transform: scale(1.1);
-        box-shadow: 2px 2px 4px rgb(175, 175, 175);
-    }
-
-    100% {
-        transform: scale(1);
+@media (max-width: 600px) {
+    .card {
+        width: 100px;
+        height: auto;
     }
 }
